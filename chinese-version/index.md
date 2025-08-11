@@ -1,7 +1,7 @@
 ---
 layout: distill
 title: "如何扩展你的模型"
-subtitle: '从系统视角看 TPU 上的大语言模型'
+subtitle: "从系统视角看 TPU 上的大语言模型"
 # permalink: /main/
 description: "训练大语言模型常常感觉像炼金术，但理解和优化模型性能并不必如此。本书旨在揭开语言模型扩展的科学：TPU（和 GPU）如何工作以及它们如何相互通信，大语言模型如何在真实硬件上运行，以及如何在训练和推理期间并行化您的模型，使其在大规模上高效运行。如果您曾经想知道"训练这个大语言模型应该花多少钱"或"我需要多少内存来自己服务这个模型"或"什么是 AllGather"，我们希望这本书对您有用。"
 date: 2025-02-04
@@ -79,6 +79,10 @@ _styles: >
 
 {% include figure.liquid path="assets/img/dragon.png" class="img-fluid" %}
 
+**从系统视角看 TPU 上的大语言模型**（第 0 部分：简介 | [第 1 部分：Rooflines](roofline)）
+
+训练大语言模型常常感觉像炼金术，但理解和优化模型性能并不必如此。本书旨在揭开语言模型扩展背后的科学：TPU（和 GPU）如何工作以及它们如何相互通信，大语言模型如何在真实硬件上运行，以及如何在训练和推理期间并行化您的模型，使其在大规模上高效运行。如果您曾经想知道"训练这个大语言模型应该花多少钱"或"我需要多少内存来自己服务这个模型"或"什么是 AllGather"，我们希望这本书对您有用。
+
 深度学习的大部分内容仍然归结为某种黑魔法，但优化模型性能并不必如此——即使在巨大规模下！相对简单的原则适用于各个地方——从处理单个加速器到数万个加速器——理解它们可以让您做许多有用的事情：
 
 - 大致估算模型各部分距离其理论最优值有多近。
@@ -110,11 +114,11 @@ _styles: >
 * 在多个 TPU 上收集、分散或重新分配数组需要多长时间？
 * 我们如何有效地乘以在设备上分布不同的矩阵？
 
-{% include figure.liquid path="assets/img/pointwise-product.gif" class="img-small" caption="<b>图：</b> 来自<a href=\"tpus\">第 2 节</a>的图表，显示 TPU 如何执行逐元素乘积。根据我们数组的大小和各种链接的带宽，我们可能发现自己是计算受限（使用完整的硬件计算能力）或通信受限（受内存加载瓶颈限制）。" %}
+{% include figure.liquid path="assets/img/pointwise-product.gif" class="img-small" caption="<b>图：</b> 来自<a href='tpus'>第 2 节</a>的图表，显示 TPU 如何执行逐元素乘积。根据我们数组的大小和各种链接的带宽，我们可能发现自己是计算受限（使用完整的硬件计算能力）或通信受限（受内存加载瓶颈限制）。" %}
 
 五年前，机器学习有着丰富多彩的架构景观——ConvNet、LSTM、MLP、Transformer——但现在我们主要只有 Transformer<d-cite key="transformers"></d-cite>。我们坚信值得理解 Transformer 架构的每一部分：每个矩阵的确切大小、归一化发生的位置、每个部分有多少参数和 FLOP<d-footnote>浮点运算，基本上是所需的加法和乘法的总数。虽然许多来源将 FLOP 理解为"每秒操作数"，但我们使用 FLOP/s 来明确表示。</d-footnote>。[第 4 节](transformers)仔细介绍了这种"Transformer 数学"，展示了如何计算训练和推理的参数和 FLOP。这告诉我们模型将使用多少内存，我们将在计算或通信上花费多少时间，以及注意力相对于前馈块何时变得重要。
 
-{% include figure.liquid path="assets/img/transformer-diagram.png" class="img-fluid" caption="<b>图：</b> 标准 Transformer 层，每个矩阵乘法（matmul）显示为圆圈内的点。所有参数（不包括规范）以紫色显示。<a href=\"transformers\">第 4 节</a>更详细地介绍了这个图表。" %}
+{% include figure.liquid path="assets/img/transformer-diagram.png" class="img-fluid" caption="<b>图：</b> 标准 Transformer 层，每个矩阵乘法（matmul）显示为圆圈内的点。所有参数（不包括规范）以紫色显示。<a href='transformers'>第 4 节</a>更详细地介绍了这个图表。" %}
 
 [第 5 节：训练](training)和[第 7 节：推理](inference)是本文的核心，我们在这里讨论基本问题：给定某个大小的模型和某个数量的芯片，我如何并行化我的模型以保持在"强扩展"范围内？这是一个简单的问题，但答案却出人意料地复杂。在高层次上，有 4 种主要的并行技术用于在多个芯片上分割模型（**数据**、**张量**、**管道**和**专家**），以及许多其他技术来减少内存需求（**重新材料化**、**优化器/模型分片（又名 ZeRO）**、**主机卸载**、**梯度累积**）。我们在这里讨论其中的许多。
 
