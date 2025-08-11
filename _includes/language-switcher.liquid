@@ -1,0 +1,203 @@
+<!-- Language Switcher -->
+<div class="language-switcher">
+  <button class="lang-btn" id="lang-toggle" onclick="toggleLanguage()">
+    <span class="lang-text" data-en="中文" data-zh="English">中文</span>
+  </button>
+</div>
+
+<style>
+.language-switcher {
+  display: inline-block;
+  margin-left: 15px;
+}
+
+.lang-btn {
+  background-color: transparent;
+  border: 1px solid var(--global-theme-color);
+  border-radius: 4px;
+  padding: 5px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: var(--global-text-color);
+}
+
+.lang-btn:hover {
+  background-color: var(--global-theme-color);
+  color: white;
+}
+
+.navbar-nav .language-switcher {
+  align-self: center;
+}
+
+/* Dark mode support */
+html[data-theme="dark"] .lang-btn {
+  border-color: var(--global-theme-color);
+  color: var(--global-text-color);
+}
+
+html[data-theme="dark"] .lang-btn:hover {
+  background-color: var(--global-theme-color);
+  color: var(--global-bg-color);
+}
+</style>
+
+<script>
+// Initialize language from localStorage or default to English
+if (!localStorage.getItem('site-language')) {
+  localStorage.setItem('site-language', 'en');
+}
+
+// Apply saved language on page load
+document.addEventListener('DOMContentLoaded', function() {
+  const savedLang = localStorage.getItem('site-language') || 'en';
+  updateLanguageButton(savedLang);
+  
+  // If user preference is Chinese but they're on English page, offer to switch
+  if (savedLang === 'zh' && !window.location.pathname.includes('Chinese%20version')) {
+    // Don't auto-redirect, but show the button state
+    updateLanguageButton('zh');
+  }
+});
+
+function toggleLanguage() {
+  const currentLang = localStorage.getItem('site-language') || 'en';
+  const newLang = currentLang === 'en' ? 'zh' : 'en';
+  
+  localStorage.setItem('site-language', newLang);
+  
+  if (newLang === 'zh') {
+    switchToChineseVersion();
+  } else {
+    switchToEnglishVersion();
+  }
+  
+  updateLanguageButton(newLang);
+}
+
+function updateLanguageButton(lang) {
+  const button = document.getElementById('lang-toggle');
+  if (button) {
+    const textElement = button.querySelector('.lang-text');
+    if (textElement) {
+      textElement.textContent = lang === 'en' ? '中文' : 'English';
+    }
+  }
+}
+
+function switchToChineseVersion() {
+  // Get current page path
+  const currentPath = window.location.pathname;
+  const baseUrl = '{{ site.baseurl }}';
+  
+  // Map English pages to Chinese pages - handle both with and without baseUrl
+  const pageMap = {
+    '/scaling-book/': '/scaling-book/Chinese%20version/',
+    '/scaling-book/index': '/scaling-book/Chinese%20version/',
+    '/scaling-book/roofline': '/scaling-book/Chinese%20version/roofline',
+    '/scaling-book/tpus': '/scaling-book/Chinese%20version/tpus',
+    '/scaling-book/sharding': '/scaling-book/Chinese%20version/sharding',
+    '/scaling-book/transformers': '/scaling-book/Chinese%20version/transformers',
+    '/scaling-book/training': '/scaling-book/Chinese%20version/training',
+    '/scaling-book/applied-training': '/scaling-book/Chinese%20version/applied-training',
+    '/scaling-book/inference': '/scaling-book/Chinese%20version/inference',
+    '/scaling-book/applied-inference': '/scaling-book/Chinese%20version/applied-inference',
+    '/scaling-book/jax-stuff': '/scaling-book/Chinese%20version/jax-stuff',
+    '/scaling-book/conclusion': '/scaling-book/Chinese%20version/conclusion',
+    '/scaling-book/gpus': '/scaling-book/Chinese%20version/gpus',
+    // Also handle paths without baseUrl prefix
+    '/': '/Chinese%20version/',
+    '/index': '/Chinese%20version/',
+    '/roofline': '/Chinese%20version/roofline',
+    '/tpus': '/Chinese%20version/tpus',
+    '/sharding': '/Chinese%20version/sharding',
+    '/transformers': '/Chinese%20version/transformers',
+    '/training': '/Chinese%20version/training',
+    '/applied-training': '/Chinese%20version/applied-training',
+    '/inference': '/Chinese%20version/inference',
+    '/applied-inference': '/Chinese%20version/applied-inference',
+    '/jax-stuff': '/Chinese%20version/jax-stuff',
+    '/conclusion': '/Chinese%20version/conclusion',
+    '/gpus': '/Chinese%20version/gpus'
+  };
+  
+  // Remove trailing slash if present
+  let pagePath = currentPath;
+  if (pagePath.endsWith('/') && pagePath !== '/') {
+    pagePath = pagePath.slice(0, -1);
+  }
+  
+  // Find corresponding Chinese page
+  let chinesePage = pageMap[pagePath];
+  
+  if (chinesePage) {
+    // Redirect to Chinese version
+    window.location.href = chinesePage;
+  } else if (!pagePath.includes('Chinese%20version')) {
+    // If no direct mapping and not already on Chinese page
+    // Try to construct Chinese path by adding Chinese version to path
+    if (baseUrl && pagePath.startsWith(baseUrl)) {
+      const relativePath = pagePath.substring(baseUrl.length);
+      window.location.href = baseUrl + '/Chinese%20version' + relativePath;
+    } else {
+      window.location.href = '/Chinese%20version' + pagePath;
+    }
+  }
+}
+
+function switchToEnglishVersion() {
+  // Get current page path
+  const currentPath = window.location.pathname;
+  const baseUrl = '{{ site.baseurl }}';
+  
+  // If we're on a Chinese page, switch to English
+  if (currentPath.includes('Chinese%20version')) {
+    // Map Chinese pages back to English - with baseUrl
+    const reverseMap = {
+      '/scaling-book/Chinese%20version/': '/scaling-book/',
+      '/scaling-book/Chinese%20version/index': '/scaling-book/',
+      '/scaling-book/Chinese%20version/roofline': '/scaling-book/roofline',
+      '/scaling-book/Chinese%20version/tpus': '/scaling-book/tpus',
+      '/scaling-book/Chinese%20version/sharding': '/scaling-book/sharding',
+      '/scaling-book/Chinese%20version/transformers': '/scaling-book/transformers',
+      '/scaling-book/Chinese%20version/training': '/scaling-book/training',
+      '/scaling-book/Chinese%20version/applied-training': '/scaling-book/applied-training',
+      '/scaling-book/Chinese%20version/inference': '/scaling-book/inference',
+      '/scaling-book/Chinese%20version/applied-inference': '/scaling-book/applied-inference',
+      '/scaling-book/Chinese%20version/jax-stuff': '/scaling-book/jax-stuff',
+      '/scaling-book/Chinese%20version/conclusion': '/scaling-book/conclusion',
+      '/scaling-book/Chinese%20version/gpus': '/scaling-book/gpus',
+      // Without baseUrl
+      '/Chinese%20version/': '/',
+      '/Chinese%20version/index': '/',
+      '/Chinese%20version/roofline': '/roofline',
+      '/Chinese%20version/tpus': '/tpus',
+      '/Chinese%20version/sharding': '/sharding',
+      '/Chinese%20version/transformers': '/transformers',
+      '/Chinese%20version/training': '/training',
+      '/Chinese%20version/applied-training': '/applied-training',
+      '/Chinese%20version/inference': '/inference',
+      '/Chinese%20version/applied-inference': '/applied-inference',
+      '/Chinese%20version/jax-stuff': '/jax-stuff',
+      '/Chinese%20version/conclusion': '/conclusion',
+      '/Chinese%20version/gpus': '/gpus'
+    };
+    
+    // Try direct mapping first
+    const englishPage = reverseMap[currentPath];
+    
+    if (englishPage) {
+      window.location.href = englishPage;
+    } else {
+      // Remove Chinese version from path
+      const englishPath = currentPath.replace('/Chinese%20version', '').replace('/Chinese version', '');
+      if (englishPath === '' || englishPath === '/') {
+        window.location.href = baseUrl ? baseUrl + '/' : '/';
+      } else {
+        window.location.href = englishPath;
+      }
+    }
+  }
+}
+</script>
