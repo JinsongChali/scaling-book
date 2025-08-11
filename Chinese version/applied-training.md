@@ -10,10 +10,10 @@ hidden: false
 
 section_number: 6
 
-previous_section_url: "../training"
+previous_section_url: "training"
 previous_section_name: "第5部分：训练"
 
-next_section_url: ../inference
+next_section_url: inference
 next_section_name: "第7部分：推理"
 
 bibliography: main.bib

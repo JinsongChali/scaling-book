@@ -10,11 +10,11 @@ hidden: false
 
 section_number: 8
 
-previous_section_url: "../inference"
-previous_section_name: "Part 7: Inference"
+previous_section_url: "inference"
+previous_section_name: "第7部分：推理"
 
-next_section_url: ../profiling
-next_section_name: "Part 9: Profiling"
+next_section_url: profiling
+next_section_name: "第9部分：性能分析"
 
 giscus_comments: true
 

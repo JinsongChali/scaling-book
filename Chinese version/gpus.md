@@ -9,11 +9,11 @@ hidden: false
 
 section_number: 12
 
-previous_section_url: 
-previous_section_name: ...
+previous_section_url: "conclusion"
+previous_section_name: "第11部分：结论"
 
-next_section_url:
-next_section_name: ...
+next_section_url: ""
+next_section_name: ""
 
 bibliography: main.bib
 

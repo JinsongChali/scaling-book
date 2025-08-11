@@ -10,11 +10,11 @@ hidden: false
 
 section_number: 10
 
-previous_section_url: "../profiling"
-previous_section_name: "Part 9: Profiling"
+previous_section_url: "profiling"
+previous_section_name: "第9部分：性能分析"
 
-next_section_url: ../conclusion
-next_section_name: "Part 11: Conclusions"
+next_section_url: conclusion
+next_section_name: "第11部分：结论"
 
 giscus_comments: true
 

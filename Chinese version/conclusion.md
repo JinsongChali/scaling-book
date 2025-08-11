@@ -10,11 +10,11 @@ hidden: false
 
 section_number: 11
 
-previous_section_url: "../jax-stuff"
-previous_section_name: "Part 10: JAX"
+previous_section_url: "jax-stuff"
+previous_section_name: "第10部分：JAX"
 
-next_section_url: ""
-next_section_name: "..."
+next_section_url: "gpus"
+next_section_name: "第12部分：GPU"
 
 giscus_comments: true
 

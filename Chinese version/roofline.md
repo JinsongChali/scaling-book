@@ -10,10 +10,10 @@ hidden: false
 
 section_number: 1
 
-previous_section_url: ".."
+previous_section_url: "."
 previous_section_name: "第0部分：引言"
 
-next_section_url: ../tpus
+next_section_url: tpus
 next_section_name: "第2部分：TPU"
 
 bibliography: main.bib
