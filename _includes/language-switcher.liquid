@@ -1,7 +1,7 @@
 <!-- Language Switcher -->
 <div class="language-switcher">
   <button class="lang-btn" id="lang-toggle" onclick="toggleLanguage()">
-    <span class="lang-text" data-en="中文" data-zh="English">中文</span>
+    <span class="lang-text">中文</span>
   </button>
 </div>
 
@@ -44,96 +44,105 @@ html[data-theme="dark"] .lang-btn:hover {
 </style>
 
 <script>
-// Initialize language from localStorage or default to English
-if (!localStorage.getItem('site-language')) {
-  localStorage.setItem('site-language', 'en');
+// Determine current language based on URL
+function getCurrentLanguage() {
+  const path = window.location.pathname;
+  return path.includes('/chinese-version') ? 'zh' : 'en';
 }
 
-// Apply saved language on page load
-document.addEventListener('DOMContentLoaded', function() {
-  const savedLang = localStorage.getItem('site-language') || 'en';
-  updateLanguageButton(savedLang);
-  
-  // If user preference is Chinese but they're on English page, offer to switch
-  if (savedLang === 'zh' && !window.location.pathname.includes('chinese-version')) {
-    // Don't auto-redirect, but show the button state
-    updateLanguageButton('zh');
-  }
-});
-
-function toggleLanguage() {
-  const currentLang = localStorage.getItem('site-language') || 'en';
-  const newLang = currentLang === 'en' ? 'zh' : 'en';
-  
-  localStorage.setItem('site-language', newLang);
-  
-  if (newLang === 'zh') {
-    switchToChineseVersion();
-  } else {
-    switchToEnglishVersion();
-  }
-  
-  updateLanguageButton(newLang);
-}
-
-function updateLanguageButton(lang) {
+// Update button text based on current language
+function updateLanguageButton() {
   const button = document.getElementById('lang-toggle');
   if (button) {
     const textElement = button.querySelector('.lang-text');
     if (textElement) {
-      textElement.textContent = lang === 'en' ? '中文' : 'English';
+      const currentLang = getCurrentLanguage();
+      // Show the opposite language as the button text
+      textElement.textContent = currentLang === 'en' ? '中文' : 'English';
     }
   }
 }
 
+// Toggle between languages
+function toggleLanguage() {
+  const currentLang = getCurrentLanguage();
+  
+  if (currentLang === 'en') {
+    switchToChineseVersion();
+  } else {
+    switchToEnglishVersion();
+  }
+}
+
 function switchToChineseVersion() {
-  // Get current page path
   const currentPath = window.location.pathname;
   const baseUrl = '{{ site.baseurl }}';
   
-  // Remove trailing slash if present (except for root)
-  let pagePath = currentPath;
-  if (pagePath.endsWith('/') && pagePath !== '/' && pagePath !== baseUrl + '/') {
-    pagePath = pagePath.slice(0, -1);
-  }
-  
   // If already on Chinese version, do nothing
-  if (pagePath.includes('chinese-version')) {
+  if (currentPath.includes('/chinese-version')) {
     return;
   }
   
-  // Construct Chinese version path
+  // Map the current page to its Chinese equivalent
   let chinesePath;
-  if (baseUrl && pagePath.startsWith(baseUrl)) {
-    const relativePath = pagePath.substring(baseUrl.length);
-    if (relativePath === '' || relativePath === '/') {
-      chinesePath = baseUrl + '/chinese-version/';
-    } else {
-      chinesePath = baseUrl + '/chinese-version' + relativePath;
-    }
+  
+  // Remove baseUrl from the path to get the relative path
+  let relativePath = currentPath;
+  if (baseUrl && currentPath.startsWith(baseUrl)) {
+    relativePath = currentPath.substring(baseUrl.length);
+  }
+  
+  // Remove leading slash if present
+  if (relativePath.startsWith('/')) {
+    relativePath = relativePath.substring(1);
+  }
+  
+  // Handle different pages
+  if (relativePath === '' || relativePath === 'index' || relativePath === 'index.html') {
+    // Root page
+    chinesePath = baseUrl + '/chinese-version/';
+  } else if (relativePath.endsWith('/')) {
+    // Directory path (e.g., roofline/)
+    chinesePath = baseUrl + '/chinese-version/' + relativePath;
+  } else if (relativePath.endsWith('.html')) {
+    // HTML file
+    const pageName = relativePath.replace('.html', '');
+    chinesePath = baseUrl + '/chinese-version/' + pageName + '/';
   } else {
-    chinesePath = '/chinese-version' + (pagePath === '/' ? '/' : pagePath);
+    // Page name without extension
+    chinesePath = baseUrl + '/chinese-version/' + relativePath + '/';
   }
   
   window.location.href = chinesePath;
 }
 
 function switchToEnglishVersion() {
-  // Get current page path
   const currentPath = window.location.pathname;
   const baseUrl = '{{ site.baseurl }}';
   
   // Only switch if on Chinese version
-  if (currentPath.includes('chinese-version')) {
-    // Remove '/chinese-version' from path
-    let englishPath = currentPath.replace('/chinese-version', '');
-    
-    // Handle root case
-    if (!englishPath || englishPath === '' || englishPath === '/') {
-      window.location.href = baseUrl ? baseUrl + '/' : '/';
-    } else {
-      window.location.href = englishPath;
-    }
+  if (!currentPath.includes('/chinese-version')) {
+    return;
   }
+  
+  // Remove the chinese-version part from the path
+  let englishPath = currentPath.replace('/chinese-version', '');
+  
+  // If the result is empty or just the baseUrl, go to root
+  if (englishPath === baseUrl || englishPath === baseUrl + '/' || englishPath === '/') {
+    englishPath = baseUrl + '/';
+  }
+  
+  window.location.href = englishPath;
+}
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', function() {
+  updateLanguageButton();
+});
+
+// Also update immediately in case DOMContentLoaded already fired
+if (document.readyState === 'interactive' || document.readyState === 'complete') {
+  updateLanguageButton();
 }
 </script>
