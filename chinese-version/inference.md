@@ -10,10 +10,10 @@ hidden: false
 
 section_number: 7
 
-previous_section_url: "applied-training"
+previous_section_url: "chinese-version/applied-training"
 previous_section_name: "第6部分：训练LLaMA"
 
-next_section_url: applied-inference
+next_section_url: "chinese-version/applied-inference"
 next_section_name: "第8部分：服务LLaMA"
 
 bibliography: main.bib

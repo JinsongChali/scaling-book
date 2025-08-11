@@ -55,11 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
   updateLanguageButton(savedLang);
   
   // If user preference is Chinese but they're on English page, offer to switch
-  if (
-    savedLang === 'zh' &&
-    !window.location.pathname.includes('Chinese%20version') &&
-    !decodeURIComponent(window.location.pathname).includes('Chinese version')
-  ) {
+  if (savedLang === 'zh' && !window.location.pathname.includes('chinese-version')) {
     // Don't auto-redirect, but show the button state
     updateLanguageButton('zh');
   }
@@ -86,60 +82,58 @@ function updateLanguageButton(lang) {
     const textElement = button.querySelector('.lang-text');
     if (textElement) {
       textElement.textContent = lang === 'en' ? '中文' : 'English';
+    }
+  }
+}
+
 function switchToChineseVersion() {
   // Get current page path
   const currentPath = window.location.pathname;
   const baseUrl = '{{ site.baseurl }}';
-
+  
   // Remove trailing slash if present (except for root)
   let pagePath = currentPath;
-  if (pagePath.endsWith('/') && pagePath !== '/') {
+  if (pagePath.endsWith('/') && pagePath !== '/' && pagePath !== baseUrl + '/') {
     pagePath = pagePath.slice(0, -1);
   }
-
+  
   // If already on Chinese version, do nothing
-  if (pagePath.includes('Chinese%20version')) {
+  if (pagePath.includes('chinese-version')) {
     return;
   }
-
-  // Dynamically construct Chinese version path
+  
+  // Construct Chinese version path
   let chinesePath;
   if (baseUrl && pagePath.startsWith(baseUrl)) {
     const relativePath = pagePath.substring(baseUrl.length);
-    chinesePath = baseUrl + '/Chinese%20version' + (relativePath === '/' ? '/' : relativePath);
+    if (relativePath === '' || relativePath === '/') {
+      chinesePath = baseUrl + '/chinese-version/';
+    } else {
+      chinesePath = baseUrl + '/chinese-version' + relativePath;
+    }
   } else {
-    chinesePath = '/Chinese%20version' + (pagePath === '/' ? '/' : pagePath);
+    chinesePath = '/chinese-version' + (pagePath === '/' ? '/' : pagePath);
   }
-
+  
   window.location.href = chinesePath;
 }
-      window.location.href = '/Chinese%20version' + pagePath;
+
 function switchToEnglishVersion() {
   // Get current page path
   const currentPath = window.location.pathname;
   const baseUrl = '{{ site.baseurl }}';
-
+  
   // Only switch if on Chinese version
-  if (currentPath.includes('Chinese%20version')) {
-    // Remove '/Chinese%20version' from path
-    let englishPath = currentPath.replace('/Chinese%20version', '').replace('/Chinese version', '');
+  if (currentPath.includes('chinese-version')) {
+    // Remove '/chinese-version' from path
+    let englishPath = currentPath.replace('/chinese-version', '');
+    
     // Handle root case
-    if (englishPath === '' || englishPath === '/') {
+    if (!englishPath || englishPath === '' || englishPath === '/') {
       window.location.href = baseUrl ? baseUrl + '/' : '/';
     } else {
       window.location.href = englishPath;
     }
   }
 }
-        window.location.href = baseUrl ? baseUrl + '/' : '/';
-      } else {
-        window.location.href = englishPath;
-      }
-    }
-  }
-    if (typeof baseUrl === 'string' && baseUrl.length > 0 && pagePath.startsWith(baseUrl)) {
-      const relativePath = pagePath.substring(baseUrl.length);
-      window.location.href = baseUrl + '/Chinese%20version' + relativePath;
-    } else {
-      window.location.href = '/Chinese%20version' + pagePath;
-    }
+</script>

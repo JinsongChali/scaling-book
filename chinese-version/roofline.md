@@ -2,7 +2,7 @@
 layout: distill
 title: "关于Roofline分析的一切"
 # permalink: /main/
-description: "当我们在硬件上运行算法时，我们会受到三个方面的限制：计算机执行数学运算的速度（操作数/秒）、移动数据的可用带宽（字节/秒）以及存储数据的总内存（字节）。这些"roofline"约束让我们能够确定给定计算的上限和下限时间。"
+description: '当我们在硬件上运行算法时，我们会受到三个方面的限制：计算机执行数学运算的速度（操作数/秒）、移动数据的可用带宽（字节/秒）以及存储数据的总内存（字节）。这些"roofline"约束让我们能够确定给定计算的上限和下限时间。'
 date: 2025-02-04
 future: true
 htmlwidgets: true
@@ -10,10 +10,10 @@ hidden: false
 
 section_number: 1
 
-previous_section_url: "."
+previous_section_url: "chinese-version"
 previous_section_name: "第0部分：引言"
 
-next_section_url: tpus
+next_section_url: chinese-version/tpus
 next_section_name: "第2部分：TPU"
 
 bibliography: main.bib

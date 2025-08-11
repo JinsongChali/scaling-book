@@ -10,10 +10,10 @@ hidden: false
 
 section_number: 5
 
-previous_section_url: "transformers"
+previous_section_url: "chinese-version/transformers"
 previous_section_name: "第4部分：Transformer"
 
-next_section_url: applied-training
+next_section_url: "chinese-version/applied-training"
 next_section_name: "第6部分：训练LLaMA"
 
 bibliography: main.bib
@@ -538,7 +538,7 @@ for i in range(0, num_layers, -1):
 
 第二种方法是仔细重叠前向矩阵乘法$W_i @ x_i$、反向$dx$矩阵乘法$W_i @ \partial L / \partial x_{i+1}$和$dW$矩阵乘法$\partial L / \partial x_{i+1} @ x_i$。由于每个都需要一些FLOPs，我们可以重叠它们以完全隐藏气泡。这是最近DeepSeek v3论文<d-cite key="DeepSeek3"></d-cite>的图，显示了他们的"无气泡"流水线调度：
 
-{% include figure.liquid path="assets/img/deepseek-pipeline.png" class="img-fluid" caption="<b>图：</b>DeepSeek v3流水线调度（来自他们的<a href=\"https://github.com/deepseek-ai/DeepSeek-V3/blob/main/DeepSeek_V3.pdf\">最近论文</a>）。橙色是前向矩阵乘法，绿色是dL/dx矩阵乘法，蓝色是dL/dW矩阵乘法。通过优先考虑向后dL/dx乘法，我们可以避免"搁浅"FLOPs。" %}
+{% include figure.liquid path="assets/img/deepseek-pipeline.png" class="img-fluid" caption='<b>图：</b>DeepSeek v3流水线调度（来自他们的<a href="https://github.com/deepseek-ai/DeepSeek-V3/blob/main/DeepSeek_V3.pdf">最近论文</a>）。橙色是前向矩阵乘法，绿色是dL/dx矩阵乘法，蓝色是dL/dW矩阵乘法。通过优先考虑向后dL/dx乘法，我们可以避免"搁浅"FLOPs。' %}
 
 因为它对TPU不太关键（TPU有更大的互连pod），我们不会深入探讨这一点，但理解关键的流水线瓶颈是一个很好的练习。
 

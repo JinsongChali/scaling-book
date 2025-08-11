@@ -144,13 +144,13 @@ newsletter:
 
 collections:
   news:
-    defaults:
-      layout: post
     output: true
     permalink: /:collection/:title/
   projects:
     output: true
     permalink: /:collection/:title/
+
+# Defaults section moved below to avoid duplication
 
 announcements:
   enabled: false
@@ -181,7 +181,7 @@ kramdown:
       start_line: 1
 
 # Includes & excludes
-include: ["_pages", "_scripts"]
+include: ["_pages", "_scripts", "chinese-version"]
 exclude:
   - bin/
   - CONTRIBUTING.md
@@ -229,9 +229,19 @@ plugins:
 # Sitemap settings
 defaults:
   - scope:
+      path: ""
+      type: "news"
+    values:
+      layout: post
+  - scope:
       path: "assets"
     values:
       sitemap: false
+  - scope:
+      path: "chinese-version"
+    values:
+      layout: distill
+      lang: zh
 
 sass:
   style: compressed

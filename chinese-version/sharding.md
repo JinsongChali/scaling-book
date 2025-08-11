@@ -2,7 +2,7 @@
 layout: distill
 title: "分片矩阵及其乘法"
 # permalink: /main/
-description: "这里我们将解释最大的机器学习模型如何在多个加速器之间分割（或"分片"）。由于大语言模型主要由矩阵乘法组成，理解这一点归结为理解当矩阵分布在设备间时如何进行矩阵乘法。我们基于TPU通信原语的成本开发了一个简单的分片矩阵乘法理论。"
+description: '这里我们将解释最大的机器学习模型如何在多个加速器之间分割（或"分片"）。由于大语言模型主要由矩阵乘法组成，理解这一点归结为理解当矩阵分布在设备间时如何进行矩阵乘法。我们基于TPU通信原语的成本开发了一个简单的分片矩阵乘法理论。'
 date: 2025-02-04
 future: true
 htmlwidgets: true
@@ -10,10 +10,10 @@ hidden: false
 
 section_number: 3
 
-previous_section_url: "tpus"
+previous_section_url: "chinese-version/tpus"
 previous_section_name: "第2部分：TPU"
 
-next_section_url: transformers
+next_section_url: chinese-version/transformers
 next_section_name: "第4部分：Transformer数学"
 
 giscus_comments: true

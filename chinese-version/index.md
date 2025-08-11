@@ -1,7 +1,7 @@
 ---
 layout: distill
 title: "如何扩展你的模型"
-subtitle: "从系统视角看 TPU 上的大语言模型"
+subtitle: '从系统视角看 TPU 上的大语言模型'
 # permalink: /main/
 description: "训练大语言模型常常感觉像炼金术，但理解和优化模型性能并不必如此。本书旨在揭开语言模型扩展的科学：TPU（和 GPU）如何工作以及它们如何相互通信，大语言模型如何在真实硬件上运行，以及如何在训练和推理期间并行化您的模型，使其在大规模上高效运行。如果您曾经想知道"训练这个大语言模型应该花多少钱"或"我需要多少内存来自己服务这个模型"或"什么是 AllGather"，我们希望这本书对您有用。"
 date: 2025-02-04
@@ -16,7 +16,7 @@ section_number: 0
 previous_section_url: ""
 previous_section_name: "第 0 部分：简介"
 
-next_section_url: roofline
+next_section_url: chinese-version/roofline
 next_section_name: "第 1 部分：Roofline 分析"
 
 bibliography: main.bib
