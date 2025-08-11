@@ -21,8 +21,6 @@ giscus_comments: true
 authors:
   - name: Jacob Austin
     url: "https://www.jacobaustin.org/"
-    affiliations:
-      name: Google DeepMind
   - name: Sholto Douglas
     url: "https://x.com/_sholtodouglas"
   - name: Roy Frostig
@@ -43,6 +41,8 @@ authors:
     url: "https://representation.ai/"
   - name: Reiner Pope<sup>*</sup>
     url: https://x.com/reinerpope
+  - name: Translator - Jinsong Hao
+    url: ""
 
 # Add a table of contents to your post.
 #   - make sure that TOC names match the actual section names

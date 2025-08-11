@@ -24,6 +24,8 @@ authors:
     url: "https://www.jacobaustin.org/"
     affiliations:
       name: Google DeepMind
+  - name: Translator - Jinsong Hao
+    url: ""
 
 # Add a table of contents to your post.
 #   - make sure that TOC names match the actual section names
