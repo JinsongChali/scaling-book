@@ -10,10 +10,10 @@ hidden: false
 
 section_number: 9
 
-previous_section_url: "chinese-version/applied-inference"
+previous_section_url: "../applied-inference"
 previous_section_name: "第8部分：服务LLaMA"
 
-next_section_url: "chinese-version/jax-stuff"
+next_section_url: "../jax-stuff"
 next_section_name: "第10部分：JAX"
 
 giscus_comments: true

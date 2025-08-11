@@ -10,10 +10,10 @@ hidden: false
 
 section_number: 3
 
-previous_section_url: "chinese-version/tpus"
+previous_section_url: "../tpus"
 previous_section_name: "第2部分：TPU"
 
-next_section_url: chinese-version/transformers
+next_section_url: ../transformers
 next_section_name: "第4部分：Transformer数学"
 
 giscus_comments: true

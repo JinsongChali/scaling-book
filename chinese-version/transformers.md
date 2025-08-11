@@ -10,10 +10,10 @@ hidden: false
 
 section_number: 4
 
-previous_section_url: "chinese-version/sharding"
+previous_section_url: "../sharding"
 previous_section_name: "第3部分：分片"
 
-next_section_url: "chinese-version/training"
+next_section_url: "../training"
 next_section_name: "第5部分：训练"
 
 giscus_comments: true

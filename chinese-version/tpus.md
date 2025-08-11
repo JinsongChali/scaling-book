@@ -12,10 +12,10 @@ hidden: false
 
 section_number: 2
 
-previous_section_url: "chinese-version/roofline"
+previous_section_url: "../roofline"
 previous_section_name: "第1部分：Roofline分析"
 
-next_section_url: chinese-version/sharding
+next_section_url: ../sharding
 next_section_name: "第3部分：分片"
 
 bibliography: main.bib

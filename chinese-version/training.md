@@ -10,10 +10,10 @@ hidden: false
 
 section_number: 5
 
-previous_section_url: "chinese-version/transformers"
+previous_section_url: "../transformers"
 previous_section_name: "第4部分：Transformer"
 
-next_section_url: "chinese-version/applied-training"
+next_section_url: "../applied-training"
 next_section_name: "第6部分：训练LLaMA"
 
 bibliography: main.bib

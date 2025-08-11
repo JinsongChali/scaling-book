@@ -16,7 +16,7 @@ section_number: 0
 previous_section_url: ""
 previous_section_name: "第 0 部分：简介"
 
-next_section_url: chinese-version/roofline
+next_section_url: "../roofline"
 next_section_name: "第 1 部分：Roofline 分析"
 
 bibliography: main.bib
